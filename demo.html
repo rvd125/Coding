@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timesheet + Scheduling App - Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Login Page */
+        .page {
+            display: none;
+            padding: 20px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .login-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .logo-subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .demo-credentials {
+            margin-top: 30px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-left: 4px solid #2563eb;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #1e40af;
+        }
+
+        .demo-credentials strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .demo-user {
+            margin: 8px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 20px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .btn-small:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            border-bottom: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            background: white;
+            color: #666;
+            font-weight: 500;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .nav-tab:hover {
+            color: #333;
+            background: #f9fafb;
+        }
+
+        .nav-tab.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+        }
+
+        /* Dashboard */
+        .welcome-section {
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-bottom: 1px solid #bae6fd;
+            margin-bottom: 20px;
+        }
+
+        .welcome-section h2 {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .date-display {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .status-card {
+            padding: 20px;
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+
+        .status-card.clocked-out {
+            background: #d1fae5;
+            border-left-color: #10b981;
+        }
+
+        .status-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .status-icon {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #f59e0b;
+            margin-right: 6px;
+        }
+
+        .status-card.clocked-out .status-icon {
+            background: #10b981;
+        }
+
+        .btn-clock {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-clock-in {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-clock-in:hover {
+            background: #059669;
+        }
+
+        .btn-clock-out {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-clock-out:hover {
+            background: #dc2626;
+        }
+
+        /* Schedule Section */
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 20px 12px;
+            color: #333;
+        }
+
+        .schedule-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+
+        .job-code {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .job-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .job-time {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .btn-schedule {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .btn-schedule:hover {
+            background: #1d4ed8;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 25px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #333;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            padding: 12px;
+            background: #e5e7eb;
+            color: #333;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        /* History */
+        .history-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-date {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .history-job {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .history-time {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .history-duration {
+            font-size: 13px;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .history-notes {
+            font-size: 12px;
+            color: #999;
+            margin-top: 6px;
+            font-style: italic;
+        }
+
+        .empty-state {
+            padding: 40px 20px;
+            text-align: center;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                box-shadow: none;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .welcome-section h2 {
+                font-size: 20px;
+            }
+
+            button {
+                font-size: 14px;
+            }
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #dc2626;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #15803d;
+            border-left: 4px solid #22c55e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Page -->
+        <div id="loginPage" class="page active login-page">
+            <div class="logo">⏱️ INTRAVISION</div>
+            <div class="logo-subtitle">The Future is here</div>
+            
+            <div class="login-form">
+                <div id="loginAlert"></div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="emailInput" placeholder="Enter your email" value="marnie@intravision.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="passwordInput" placeholder="Enter your password" value="demo123">
+                </div>
+
+                <button onclick="login()" style="font-size: 16px; padding: 14px;">✓ Sign In</button>
+
+                <div class="demo-credentials">
+                    <strong>ℹ️ Demo Accounts:</strong>
+                    <div class="demo-user"><strong>marnie@intravision.com</strong> / demo123</div>
+                    <div class="demo-user"><strong>renzo@intravision.com</strong> / demo123</div>
+                    <div class="demo-user"><strong>grant@intravision.com</strong> / demo123</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Welcome Page -->
+        <div id="welcomePage" class="page">
+            <div class="header">
+                <h1>⏱️ Timesheet</h1>
+                <div class="header-actions">
+                    <button class="btn-small" onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <div class="welcome-section" style="padding: 40px 20px; text-align: center; margin-bottom: 0;">
+                <h2 id="welcomeUserName" style="font-size: 32px; margin-bottom: 8px;">Welcome</h2>
+                <p id="welcomeUserEmail" style="font-size: 18px; color: #2563eb; margin-bottom: 30px; font-weight: 600;">marnie@intravision.com</p>
+                <button onclick="continueToDashboard()" style="font-size: 16px; padding: 14px; width: 100%; max-width: 300px; margin: 0 auto; display: block;">Continue to Dashboard →</button>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboardPage" class="page">
+            <div class="header">
+                <h1>Timesheet</h1>
+                <div class="header-actions">
+                    <button class="btn-small" onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <div class="nav-tabs">
+                <div class="nav-tab active" onclick="switchTab('dashboard')">Dashboard</div>
+                <div class="nav-tab" onclick="switchTab('history')">History</div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboardTab">
+                <div class="welcome-section">
+                    <h2 id="userName">Welcome, Marnie</h2>
+                    <div class="date-display" id="dateDisplay"></div>
+                </div>
+
+                <div id="alertContainer"></div>
+
+                <div class="status-card clocked-out" id="statusCard">
+                    <div class="status-label">Clock Status</div>
+                    <div class="status-text">
+                        <span class="status-icon"></span>
+                        <span id="statusText">You are clocked OUT</span>
+                    </div>
+                    <div id="lastClockTime" style="font-size: 12px; color: #666;"></div>
+                    <button class="btn-clock btn-clock-in" id="clockBtn" onclick="openClockModal('IN')">Clock In</button>
+                </div>
+
+                <!-- Clock Mode Selection -->
+                <div style="padding: 20px; margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 12px; font-weight: 600; color: #333; font-size: 14px;">Clock Mode</label>
+                    <div style="display: flex; gap: 12px;">
+                        <label style="flex: 1; display: flex; align-items: center; cursor: pointer;">
+                            <input type="radio" name="clockMode" value="schedule" checked onchange="updateClockMode()" style="margin-right: 8px; cursor: pointer;">
+                            <span>Use Schedule (Default)</span>
+                        </label>
+                        <label style="flex: 1; display: flex; align-items: center; cursor: pointer;">
+                            <input type="radio" name="clockMode" value="overwrite" onchange="updateClockMode()" style="margin-right: 8px; cursor: pointer;">
+                            <span>Overwrite Schedule</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Overwrite Selection (hidden by default) -->
+                <div id="overwriteContainer" style="padding: 20px; background: #f9fafb; border-radius: 6px; margin-bottom: 20px; display: none;">
+                    <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: #333;">Select Cost Centre & Job</h3>
+                    <div class="form-group">
+                        <label>Cost Centre</label>
+                        <select id="costCentreSelect" onchange="updateJobsForCostCentre()">
+                            <option value="">-- Select a cost centre --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Job</label>
+                        <select id="overwriteJobSelect">
+                            <option value="">-- Select a job --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Today's Schedule</h3>
+                <div id="scheduleContainer"></div>
+            </div>
+
+            <!-- History Tab -->
+            <div id="historyTab" style="display: none;">
+                <h3 class="section-title">Time Entry History</h3>
+                <div id="historyContainer"></div>
+            </div>
+        </div>
+
+        <!-- Clock Modal -->
+        <div id="clockModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header" id="modalTitle">Clock In</div>
+                <div class="modal-body">
+                    <div id="scheduleSelectionContainer" style="display: none;">
+                        <div class="form-group">
+                            <label for="scheduleSelect">Select Schedule</label>
+                            <select id="scheduleSelect">
+                                <option value="">-- Select a schedule --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="jobSelectionContainer">
+                        <div class="form-group">
+                            <label for="jobSelect">Job / Cost Code</label>
+                            <select id="jobSelect">
+                                <option value="">-- Select a job --</option>
+                                <option value="10">JOB-614500 – Main Installation</option>
+                                <option value="11">JOB-615500 – Site Review</option>
+                                <option value="12">JOB-618000 – Maintenance</option>
+                                <option value="13">JOB-619415 – Consultation</option>
+                                <option value="101">JOB-614500 – Daily Operations</option>
+                                <option value="102">JOB-614600 – Team Meeting</option>
+                                <option value="103">JOB-618100 – Preventive Care</option>
+                                <option value="104">JOB-619500 – Training</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notesInput">Notes (Optional)</label>
+                        <textarea id="notesInput" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; resize: vertical;" rows="3" placeholder="Add any notes..."></textarea>
+                    </div>
+
+                    <div id="modalAlert"></div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn-primary" id="submitBtn" onclick="submitClock()">Clock In</button>
+                    <button class="btn-secondary" onclick="closeClockModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock Data
+        const mockUsers = {
+            'marnie@intravision.com': { id: 1, name: 'Marnie', email: 'marnie@intravision.com' },
+            'renzo@intravision.com': { id: 2, name: 'Renzo', email: 'renzo@intravision.com' },
+            'grant@intravision.com': { id: 3, name: 'Grant', email: 'grant@intravision.com' }
+        };
+
+        const mockCostCentres = [
+            { id: 'CC001', name: 'Operations', costCode: 'OPS-001' },
+            { id: 'CC002', name: 'Installation', costCode: 'INST-001' },
+            { id: 'CC003', name: 'Maintenance', costCode: 'MAINT-001' },
+            { id: 'CC004', name: 'Support', costCode: 'SUP-001' }
+        ];
+
+        const mockJobsByCostCentre = {
+            'CC001': [
+                { id: 101, code: 'JOB-614500', name: 'Daily Operations' },
+                { id: 102, code: 'JOB-614600', name: 'Team Meeting' }
+            ],
+            'CC002': [
+                { id: 10, code: 'JOB-614500', name: 'Main Installation' },
+                { id: 11, code: 'JOB-615500', name: 'Site Review' }
+            ],
+            'CC003': [
+                { id: 12, code: 'JOB-618000', name: 'Maintenance' },
+                { id: 103, code: 'JOB-618100', name: 'Preventive Care' }
+            ],
+            'CC004': [
+                { id: 13, code: 'JOB-619415', name: 'Consultation' },
+                { id: 104, code: 'JOB-619500', name: 'Training' }
+            ]
+        };
+
+        const mockJobs = [
+            { id: 10, code: 'JOB-614500', name: 'Main Installation', costCentre: 'CC002' },
+            { id: 11, code: 'JOB-615500', name: 'Site Review', costCentre: 'CC002' },
+            { id: 12, code: 'JOB-618000', name: 'Maintenance', costCentre: 'CC003' },
+            { id: 13, code: 'JOB-619415', name: 'Consultation', costCentre: 'CC004' },
+            { id: 101, code: 'JOB-614500', name: 'Daily Operations', costCentre: 'CC001' },
+            { id: 102, code: 'JOB-614600', name: 'Team Meeting', costCentre: 'CC001' },
+            { id: 103, code: 'JOB-618100', name: 'Preventive Care', costCentre: 'CC003' },
+            { id: 104, code: 'JOB-619500', name: 'Training', costCentre: 'CC004' }
+        ];
+
+        const mockSchedules = {
+            'marnie@intravision.com': [
+                { id: 1, jobId: 10, jobCode: 'JOB-614500', jobName: 'Main Installation', costCentre: 'CC002', shiftStart: '09:00', shiftEnd: '12:30', description: 'Cable installation at Site A' },
+                { id: 2, jobId: 11, jobCode: 'JOB-615500', jobName: 'Site Review', costCentre: 'CC002', shiftStart: '14:00', shiftEnd: '17:30', description: 'Site inspection & safety review' }
+            ],
+            'renzo@intravision.com': [
+                { id: 3, jobId: 12, jobCode: 'JOB-618000', jobName: 'Maintenance', costCentre: 'CC003', shiftStart: '08:00', shiftEnd: '16:00', description: 'Building inspection' }
+            ],
+            'grant@intravision.com': [
+                { id: 4, jobId: 10, jobCode: 'JOB-614500', jobName: 'Main Installation', costCentre: 'CC002', shiftStart: '09:00', shiftEnd: '12:30', description: 'Electrical work' },
+                { id: 5, jobId: 13, jobCode: 'JOB-619415', jobName: 'Consultation', costCentre: 'CC004', shiftStart: '13:00', shiftEnd: '17:00', description: 'Client meeting' }
+            ]
+        };
+
+        // State
+        let currentUser = null;
+        let timeEntries = [];
+        let clockAction = 'IN';
+        let selectedScheduleId = null;
+        let useOverwrite = false;
+        let clockMode = 'schedule'; // 'schedule' or 'overwrite'
+
+        // Initialize
+        function init() {
+            loadData();
+            updateDateDisplay();
+            setInterval(updateDateDisplay, 60000);
+        }
+
+        function updateDateDisplay() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = new Date().toLocaleDateString('en-US', options);
+            document.getElementById('dateDisplay').textContent = dateStr;
+        }
+
+        // Login
+        function login() {
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value.trim();
+
+            if (!email) {
+                showLoginAlert('Email is required', 'error');
+                return;
+            }
+
+            if (!password) {
+                showLoginAlert('Password is required', 'error');
+                return;
+            }
+
+            if (password !== 'demo123') {
+                showLoginAlert('Invalid password. Use: demo123', 'error');
+                return;
+            }
+
+            if (!mockUsers[email]) {
+                showLoginAlert('User not found', 'error');
+                return;
+            }
+
+            currentUser = mockUsers[email];
+            document.getElementById('loginPage').classList.remove('active');
+            document.getElementById('welcomePage').classList.add('active');
+
+            document.getElementById('welcomeUserName').textContent = `Welcome, ${currentUser.name}!`;
+            document.getElementById('welcomeUserEmail').textContent = currentUser.email;
+        }
+
+        function continueToDashboard() {
+            document.getElementById('welcomePage').classList.remove('active');
+            document.getElementById('dashboardPage').classList.add('active');
+
+            renderDashboard();
+            initializeCostCentreDropdown();
+        }
+
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                currentUser = null;
+                timeEntries = [];
+                localStorage.removeItem('timeEntries');
+                document.getElementById('dashboardPage').classList.remove('active');
+                document.getElementById('welcomePage').classList.remove('active');
+                document.getElementById('loginPage').classList.add('active');
+                document.getElementById('loginAlert').innerHTML = '';
+            }
+        }
+
+        // Render Dashboard
+        function renderDashboard() {
+            // Update welcome message
+            document.getElementById('userName').textContent = `Welcome, ${currentUser.name}`;
+
+            // Check if clocked in
+            const activeClock = timeEntries.find(e => e.userId === currentUser.id && e.status === 'IN');
+            updateClockStatus(activeClock);
+
+            // Render schedule
+            renderSchedule();
+
+            // Render history
+            renderHistory();
+        }
+
+        // Update Clock Status
+        function updateClockStatus(activeClock) {
+            const statusCard = document.getElementById('statusCard');
+            const statusText = document.getElementById('statusText');
+            const clockBtn = document.getElementById('clockBtn');
+            const lastClockTime = document.getElementById('lastClockTime');
+
+            if (activeClock) {
+                statusCard.classList.remove('clocked-out');
+                statusText.innerHTML = `<span class="status-icon" style="background: #f59e0b;"></span>You are clocked IN`;
+                clockBtn.textContent = 'Clock Out';
+                clockBtn.className = 'btn-clock btn-clock-out';
+                clockBtn.onclick = () => openClockModal('OUT');
+
+                const inTime = new Date(activeClock.clockInTime);
+                const hours = Math.floor((Date.now() - inTime) / 3600000);
+                const mins = Math.floor(((Date.now() - inTime) % 3600000) / 60000);
+                lastClockTime.textContent = `Clocked in since ${inTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} (${hours}h ${mins}m)`;
+            } else {
+                statusCard.classList.add('clocked-out');
+                statusText.innerHTML = `<span class="status-icon" style="background: #10b981;"></span>You are clocked OUT`;
+                clockBtn.textContent = 'Clock In';
+                clockBtn.className = 'btn-clock btn-clock-in';
+                clockBtn.onclick = () => openClockModal('IN');
+
+                const lastEntry = timeEntries
+                    .filter(e => e.userId === currentUser.id && e.status === 'OUT')
+                    .sort((a, b) => new Date(b.clockOutTime) - new Date(a.clockOutTime))[0];
+
+                if (lastEntry) {
+                    const outTime = new Date(lastEntry.clockOutTime);
+                    lastClockTime.textContent = `Last clocked out: ${outTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                } else {
+                    lastClockTime.textContent = '';
+                }
+            }
+        }
+
+        // Render Schedule
+        function renderSchedule() {
+            const schedules = mockSchedules[currentUser.email] || [];
+            const container = document.getElementById('scheduleContainer');
+
+            if (schedules.length === 0) {
+                container.innerHTML = '<div class="empty-state">No schedules for today</div>';
+                return;
+            }
+
+            container.innerHTML = schedules.map(schedule => {
+                // Check if there's any time entry for this job
+                const jobEntries = timeEntries.filter(e => 
+                    e.userId === currentUser.id && 
+                    e.jobId === schedule.jobId
+                );
+
+                let backgroundColor = 'white';
+                let statusLine = '';
+                let borderLeft = '4px solid transparent';
+
+                // Check for overwrite entry (job from this schedule but with different cost centre)
+                const overwriteEntry = jobEntries.find(e => e.costCentre !== schedule.costCentre);
+
+                if (overwriteEntry) {
+                    // Overwrite entry - red background
+                    backgroundColor = '#fee2e2';
+                    borderLeft = '4px solid #ef4444';
+                    statusLine = '<div style="font-size: 12px; color: #dc2626; margin-top: 8px; font-weight: 600;">🔴 Overwrite Entry</div>';
+                } else if (jobEntries.length > 0) {
+                    // Check if currently clocked in or clocked out
+                    const clockedIn = jobEntries.some(e => e.status === 'IN');
+                    const clockedOut = jobEntries.some(e => e.status === 'OUT');
+
+                    if (clockedIn) {
+                        // Currently clocked in - light green
+                        backgroundColor = '#dbeafe';
+                        borderLeft = '4px solid #3b82f6';
+                        statusLine = '<div style="font-size: 12px; color: #1d4ed8; margin-top: 8px; font-weight: 600;">● Clocked In</div>';
+                    } else if (clockedOut) {
+                        // Clocked out - solid green
+                        backgroundColor = '#dcfce7';
+                        borderLeft = '4px solid #22c55e';
+                        statusLine = '';
+                    }
+                }
+
+                return `
+                    <div class="schedule-item" style="background-color: ${backgroundColor}; border-left: ${borderLeft};">
+                        <div class="job-code">${schedule.jobCode}</div>
+                        <div class="job-name">${schedule.jobName}</div>
+                        <div class="job-time">${schedule.shiftStart} – ${schedule.shiftEnd}</div>
+                        ${schedule.description ? `<div style="font-size: 13px; color: #666; margin-bottom: 10px;">${schedule.description}</div>` : ''}
+                        ${statusLine}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render History
+        function renderHistory() {
+            const userEntries = timeEntries.filter(e => e.userId === currentUser.id);
+            const container = document.getElementById('historyContainer');
+
+            if (userEntries.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📋</div>No time entries yet</div>';
+                return;
+            }
+
+            container.innerHTML = userEntries
+                .sort((a, b) => new Date(b.clockInTime) - new Date(a.clockInTime))
+                .map(entry => {
+                    const inTime = new Date(entry.clockInTime);
+                    const outTime = entry.clockOutTime ? new Date(entry.clockOutTime) : null;
+                    const duration = outTime ? Math.round((outTime - inTime) / 60000) : 0;
+                    const hours = Math.floor(duration / 60);
+                    const mins = duration % 60;
+
+                    return `
+                        <div class="history-item">
+                            <div class="history-date">${inTime.toLocaleDateString()}</div>
+                            <div class="history-job">${entry.jobName}</div>
+                            <div class="history-time">${inTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} – ${outTime ? outTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'In Progress'}</div>
+                            ${outTime ? `<div class="history-duration">${hours}h ${mins}m</div>` : ''}
+                            ${entry.notes ? `<div class="history-notes">"${entry.notes}"</div>` : ''}
+                        </div>
+                    `;
+                }).join('');
+        }
+
+        // Clock Modal
+        function openClockModal(action) {
+            clockAction = action;
+            document.getElementById('modalTitle').textContent = action === 'IN' ? 'Clock In' : 'Clock Out';
+            document.getElementById('submitBtn').textContent = action === 'IN' ? 'Clock In' : 'Clock Out';
+
+            // Show/hide schedule selection based on mode
+            const scheduleContainer = document.getElementById('scheduleSelectionContainer');
+            const jobContainer = document.getElementById('jobSelectionContainer');
+
+            if (action === 'IN') {
+                if (clockMode === 'schedule') {
+                    scheduleContainer.style.display = 'block';
+                    jobContainer.style.display = 'none';
+                    renderScheduleSelect();
+                } else {
+                    scheduleContainer.style.display = 'none';
+                    jobContainer.style.display = 'block';
+                }
+            } else {
+                scheduleContainer.style.display = 'none';
+                jobContainer.style.display = 'none';
+            }
+
+            document.getElementById('jobSelect').value = '';
+            document.getElementById('notesInput').value = '';
+            document.getElementById('modalAlert').innerHTML = '';
+            document.getElementById('clockModal').classList.add('active');
+        }
+
+        function updateClockMode() {
+            const mode = document.querySelector('input[name="clockMode"]:checked').value;
+            clockMode = mode;
+            
+            const overwriteContainer = document.getElementById('overwriteContainer');
+            if (mode === 'overwrite') {
+                overwriteContainer.style.display = 'block';
+            } else {
+                overwriteContainer.style.display = 'none';
+            }
+        }
+
+        function initializeCostCentreDropdown() {
+            const select = document.getElementById('costCentreSelect');
+            select.innerHTML = '<option value="">-- Select a cost centre --</option>';
+            
+            mockCostCentres.forEach(cc => {
+                const option = document.createElement('option');
+                option.value = cc.id;
+                option.textContent = `${cc.costCode} - ${cc.name}`;
+                select.appendChild(option);
+            });
+        }
+
+        function updateJobsForCostCentre() {
+            const costCentreId = document.getElementById('costCentreSelect').value;
+            const jobSelect = document.getElementById('overwriteJobSelect');
+            
+            jobSelect.innerHTML = '<option value="">-- Select a job --</option>';
+            
+            if (costCentreId && mockJobsByCostCentre[costCentreId]) {
+                mockJobsByCostCentre[costCentreId].forEach(job => {
+                    const option = document.createElement('option');
+                    option.value = job.id;
+                    option.textContent = `${job.code} - ${job.name}`;
+                    jobSelect.appendChild(option);
+                });
+            }
+        }
+
+        function renderScheduleSelect() {
+            const select = document.getElementById('scheduleSelect');
+            const schedules = mockSchedules[currentUser.email] || [];
+            
+            select.innerHTML = '<option value="">-- Select a schedule --</option>';
+            
+            schedules.forEach(schedule => {
+                const option = document.createElement('option');
+                option.value = schedule.id;
+                option.textContent = `${schedule.jobName} (${schedule.shiftStart} - ${schedule.shiftEnd})`;
+                option.dataset.jobId = schedule.jobId;
+                select.appendChild(option);
+            });
+        }
+
+        function closeClockModal() {
+            document.getElementById('clockModal').classList.remove('active');
+        }
+
+        function submitClock() {
+            if (clockAction === 'IN') {
+                let jobId = null;
+                let job = null;
+                const notes = document.getElementById('notesInput').value;
+
+                if (clockMode === 'schedule') {
+                    const scheduleId = document.getElementById('scheduleSelect').value;
+                    if (!scheduleId) {
+                        document.getElementById('modalAlert').innerHTML = '<div class="alert alert-error">Please select a schedule</div>';
+                        return;
+                    }
+                    
+                    const schedules = mockSchedules[currentUser.email] || [];
+                    const schedule = schedules.find(s => s.id === parseInt(scheduleId));
+                    if (schedule) {
+                        jobId = schedule.jobId;
+                        job = mockJobs.find(j => j.id === schedule.jobId);
+                    }
+                } else {
+                    // Overwrite mode
+                    jobId = document.getElementById('overwriteJobSelect').value;
+                    if (!jobId) {
+                        document.getElementById('modalAlert').innerHTML = '<div class="alert alert-error">Please select a cost centre and job</div>';
+                        return;
+                    }
+                    job = mockJobs.find(j => j.id === parseInt(jobId));
+                }
+
+                if (!job) {
+                    document.getElementById('modalAlert').innerHTML = '<div class="alert alert-error">Invalid job selection</div>';
+                    return;
+                }
+
+                timeEntries.push({
+                    id: Date.now(),
+                    userId: currentUser.id,
+                    jobId: parseInt(jobId),
+                    jobCode: job.code,
+                    jobName: job.name,
+                    costCentre: job.costCentre,
+                    clockInTime: new Date(),
+                    status: 'IN',
+                    notes: notes
+                });
+
+                showAlert('Clocked in successfully!', 'success');
+            } else {
+                const activeClock = timeEntries.find(e => e.userId === currentUser.id && e.status === 'IN');
+                if (activeClock) {
+                    const notes = document.getElementById('notesInput').value;
+                    if (notes) {
+                        activeClock.notes = notes;
+                    }
+                    activeClock.clockOutTime = new Date();
+                    activeClock.status = 'OUT';
+
+                    showAlert('Clocked out successfully!', 'success');
+                }
+            }
+
+            closeClockModal();
+            saveData();
+            renderDashboard();
+        }
+
+        // Tabs
+        function switchTab(tab) {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('#dashboardTab, #historyTab').forEach(t => t.style.display = 'none');
+
+            if (tab === 'dashboard') {
+                document.querySelectorAll('.nav-tab')[0].classList.add('active');
+                document.getElementById('dashboardTab').style.display = 'block';
+            } else {
+                document.querySelectorAll('.nav-tab')[1].classList.add('active');
+                document.getElementById('historyTab').style.display = 'block';
+            }
+        }
+
+        // Alert
+        function showAlert(message, type) {
+            const container = document.getElementById('alertContainer');
+            container.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 3000);
+        }
+
+        function showLoginAlert(message, type) {
+            const container = document.getElementById('loginAlert');
+            container.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 4000);
+        }
+
+        // Local Storage
+        function saveData() {
+            localStorage.setItem('timeEntries', JSON.stringify(timeEntries));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem('timeEntries');
+            if (saved) {
+                timeEntries = JSON.parse(saved);
+                // Convert string dates back to Date objects
+                timeEntries = timeEntries.map(e => ({
+                    ...e,
+                    clockInTime: new Date(e.clockInTime),
+                    clockOutTime: e.clockOutTime ? new Date(e.clockOutTime) : null
+                }));
+            }
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>
