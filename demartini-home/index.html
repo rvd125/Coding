@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme:light)">
+  <meta name="theme-color" content="#111214" media="(prefers-color-scheme:dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Home">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./home-icon-180.png">
+  <title>Demartini Home</title>
+  <style>
+    :root{color-scheme:light dark;--bg:#f4f1ea;--panel:rgba(255,255,255,.72);--strong:rgba(255,255,255,.94);--text:#161718;--muted:#6b6d70;--line:rgba(20,20,20,.08);--shadow:0 12px 32px rgba(28,24,18,.08)}
+    @media(prefers-color-scheme:dark){:root{--bg:#111214;--panel:rgba(31,33,36,.8);--strong:rgba(39,41,45,.97);--text:#f5f6f7;--muted:#a8abb0;--line:rgba(255,255,255,.08);--shadow:0 14px 36px rgba(0,0,0,.24)}}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,sans-serif}body{min-height:100dvh}.shell{width:min(100%,560px);margin:auto;padding:calc(env(safe-area-inset-top) + 28px) 20px calc(env(safe-area-inset-bottom) + 28px)}.eyebrow{margin:0 0 8px;font-size:13px;font-weight:700;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}h1{margin:0;font-size:clamp(38px,10vw,58px);line-height:.98;letter-spacing:-.045em}.sub{margin:12px 0 0;color:var(--muted);font-size:16px;line-height:1.4}.section{margin-top:30px}.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.section-title h2{margin:0;font-size:14px}.section-title span{color:var(--muted);font-size:12px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{-webkit-tap-highlight-color:transparent;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);border-radius:24px;min-height:154px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .14s ease,background .14s ease}.card:active{transform:scale(.975);background:var(--strong)}.card.wide{grid-column:1/-1;min-height:118px}.icon{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:var(--strong);border:1px solid var(--line);font-size:25px;box-shadow:0 7px 16px rgba(0,0,0,.06)}.name{font-size:20px;font-weight:740;letter-spacing:-.025em}.meta{margin-top:4px;color:var(--muted);font-size:13px}.wide-row{display:flex;align-items:center;justify-content:space-between;gap:14px;height:100%}.wide-left{display:flex;align-items:center;gap:14px}.arrow{color:var(--muted);font-size:18px}.footer{margin-top:28px;border-radius:20px;border:1px solid var(--line);background:var(--panel);padding:15px 16px;color:var(--muted);font-size:12px;line-height:1.45}.footer strong{color:var(--text)}
+  </style>
+</head>
+<body>
+<main class="shell">
+  <p class="eyebrow">Demartini Home</p><h1>Home.</h1><p class="sub">One front door for the house. Tap a device to open its control app.</p>
+  <section class="section"><div class="section-title"><h2>Laundry & kitchen</h2><span>2 shortcuts</span></div><div class="grid">
+    <a class="card" href="shortcuts://run-shortcut?name=Laundry"><div class="icon">🧺</div><div><div class="name">Laundry</div><div class="meta">LG ThinQ · washer + dryer</div></div></a>
+    <a class="card" href="shortcuts://run-shortcut?name=Dishwasher"><div class="icon">🍽️</div><div><div class="name">Dishwasher</div><div class="meta">Bosch Home Connect</div></div></a>
+  </div></section>
+  <section class="section"><div class="section-title"><h2>Comfort & cleaning</h2><span>2 shortcuts</span></div><div class="grid">
+    <a class="card" href="shortcuts://run-shortcut?name=Air%20Con"><div class="icon">❄️</div><div><div class="name">Air Con</div><div class="meta">Daikin</div></div></a>
+    <a class="card" href="shortcuts://run-shortcut?name=Dyson"><div class="icon">🧹</div><div><div class="name">Dyson</div><div class="meta">MyDyson</div></div></a>
+  </div></section>
+  <section class="section"><div class="section-title"><h2>Entertainment</h2><span>2 shortcuts</span></div><div class="grid">
+    <a class="card wide" href="shortcuts://run-shortcut?name=TV"><div class="wide-row"><div class="wide-left"><div class="icon">📺</div><div><div class="name">TV</div><div class="meta">TCL / Google TV</div></div></div><div class="arrow">›</div></div></a>
+    <a class="card wide" href="shortcuts://run-shortcut?name=Bose"><div class="wide-row"><div class="wide-left"><div class="icon">🔊</div><div><div class="name">Bose</div><div class="meta">Bose soundbar / speaker</div></div></div><div class="arrow">›</div></div></a>
+  </div></section>
+  <div class="footer"><strong>v0.2</strong> · No passwords or appliance credentials are stored here. Each tile simply runs a Shortcut on your iPhone.</div>
+</main>
+<script>if('serviceWorker'in navigator&&location.protocol.startsWith('http'))addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));</script>
+</body></html>
