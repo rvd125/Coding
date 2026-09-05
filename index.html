@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+  <meta name="theme-color" content="#11151b">
+  <title>Opening Demartini Home…</title>
+  <style>
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;background:#11151b;color:#fff}body{min-height:100dvh;display:grid;place-items:center;padding:24px}.card{width:min(100%,420px);padding:28px;border-radius:28px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.3);backdrop-filter:blur(20px)}.mark{width:64px;height:64px;border-radius:20px;margin:0 auto 18px;display:grid;place-items:center;background:linear-gradient(145deg,#202633,#566275);font-size:30px}.spinner{width:28px;height:28px;border-radius:50%;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;margin:18px auto 0;animation:spin .8s linear infinite}h1{margin:0;font-size:26px;letter-spacing:-.03em}p{margin:10px 0 0;color:rgba(255,255,255,.68);font-size:14px;line-height:1.45}@keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="mark">⌂</div>
+    <h1>Updating Demartini Home</h1>
+    <p>Removing the old v0.2 cache and opening the latest home base.</p>
+    <div class="spinner"></div>
+  </div>
+  <script>
+    (async()=>{
+      try{
+        if('serviceWorker' in navigator){
+          const registrations=await navigator.serviceWorker.getRegistrations();
+          await Promise.all(registrations.map(r=>r.unregister()));
+        }
+        if('caches' in window){
+          const keys=await caches.keys();
+          await Promise.all(keys.map(k=>caches.delete(k)));
+        }
+      }catch(e){}
+      const target='./demartini-home/?fresh='+Date.now();
+      setTimeout(()=>location.replace(target),350);
+    })();
+  </script>
+</body>
+</html>
