@@ -1,5 +1,5 @@
-const CACHE='demartini-home-v2';
-const ASSETS=['./','./index.html','./manifest.webmanifest','./home-icon-180.png','./home-icon-512.png'];
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));
-self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(hit=>hit||fetch(e.request))));
+const CACHE='demartini-home-v8';
+const CORE=['./','./index.html','./manifest.webmanifest','./home-icon-180.png','./home-icon-512.png','./service-worker.js'];
+self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)))});
+self.addEventListener('activate',e=>e.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)));await self.clients.claim()})()));
+self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET')return;const u=new URL(r.url);if(u.origin!==self.location.origin)return;const html=r.mode==='navigate'||(r.headers.get('accept')||'').includes('text/html');if(html){e.respondWith((async()=>{try{const fresh=await fetch(r,{cache:'no-store'});const c=await caches.open(CACHE);c.put('./index.html',fresh.clone());return fresh}catch(err){return(await caches.match('./index.html'))||Response.error()}})());return}e.respondWith((async()=>{const hit=await caches.match(r);if(hit)return hit;const fresh=await fetch(r);const c=await caches.open(CACHE);c.put(r,fresh.clone());return fresh})())});
