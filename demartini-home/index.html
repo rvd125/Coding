@@ -1,39 +1,172 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme:light)">
-  <meta name="theme-color" content="#111214" media="(prefers-color-scheme:dark)">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Home">
-  <meta name="demartini-home-build" content="2026-09-05">
-  <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="apple-touch-icon" href="./home-icon-180.png">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f3efe8" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0c10" media="(prefers-color-scheme: dark)" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Home" />
+  <meta name="demartini-home-build" content="0.8.0" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="./home-icon-180.png" />
   <title>Demartini Home</title>
   <style>
-    :root{color-scheme:light dark;--bg:#f4f1ea;--panel:rgba(255,255,255,.72);--strong:rgba(255,255,255,.94);--text:#161718;--muted:#6b6d70;--line:rgba(20,20,20,.08);--shadow:0 12px 32px rgba(28,24,18,.08)}
-    @media(prefers-color-scheme:dark){:root{--bg:#111214;--panel:rgba(31,33,36,.8);--strong:rgba(39,41,45,.97);--text:#f5f6f7;--muted:#a8abb0;--line:rgba(255,255,255,.08);--shadow:0 14px 36px rgba(0,0,0,.24)}}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,sans-serif}body{min-height:100dvh}.shell{width:min(100%,560px);margin:auto;padding:calc(env(safe-area-inset-top) + 28px) 20px calc(env(safe-area-inset-bottom) + 28px)}.eyebrow{margin:0 0 8px;font-size:13px;font-weight:700;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}h1{margin:0;font-size:clamp(38px,10vw,58px);line-height:.98;letter-spacing:-.045em}.sub{margin:12px 0 0;color:var(--muted);font-size:16px;line-height:1.4}.section{margin-top:30px}.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.section-title h2{margin:0;font-size:14px}.section-title span{color:var(--muted);font-size:12px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{-webkit-tap-highlight-color:transparent;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);border-radius:24px;min-height:154px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .14s ease,background .14s ease}.card:active{transform:scale(.975);background:var(--strong)}.card.wide{grid-column:1/-1;min-height:118px}.icon{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:var(--strong);border:1px solid var(--line);font-size:25px;box-shadow:0 7px 16px rgba(0,0,0,.06)}.name{font-size:20px;font-weight:740;letter-spacing:-.025em}.meta{margin-top:4px;color:var(--muted);font-size:13px}.wide-row{display:flex;align-items:center;justify-content:space-between;gap:14px;height:100%}.wide-left{display:flex;align-items:center;gap:14px}.arrow{color:var(--muted);font-size:18px}.footer{margin-top:28px;border-radius:20px;border:1px solid var(--line);background:var(--panel);padding:15px 16px;color:var(--muted);font-size:12px;line-height:1.45}.footer strong{color:var(--text)}
+    :root {
+      color-scheme: light dark;
+      --bg:#f3efe8; --bg2:#eae3d8; --card:rgba(255,255,255,.72); --card2:rgba(255,255,255,.9);
+      --text:#111318; --muted:#737780; --line:rgba(22,25,31,.09); --accent:#2378ff; --accent-soft:rgba(35,120,255,.12);
+      --green:#2fb56a; --red:#ff5f57; --amber:#ffb020; --shadow:0 18px 50px rgba(58,43,20,.10); --nav:rgba(248,246,242,.82);
+    }
+    @media(prefers-color-scheme:dark){
+      :root { --bg:#0a0c10; --bg2:#11151b; --card:rgba(25,29,36,.76); --card2:rgba(34,39,48,.94); --text:#f7f8fb; --muted:#a5acb7; --line:rgba(255,255,255,.08); --accent:#5ea2ff; --accent-soft:rgba(94,162,255,.14); --shadow:0 22px 55px rgba(0,0,0,.32); --nav:rgba(17,20,26,.86); }
+    }
+    html[data-theme="light"] { color-scheme: light; --bg:#f3efe8; --bg2:#eae3d8; --card:rgba(255,255,255,.72); --card2:rgba(255,255,255,.9); --text:#111318; --muted:#737780; --line:rgba(22,25,31,.09); --accent:#2378ff; --accent-soft:rgba(35,120,255,.12); --shadow:0 18px 50px rgba(58,43,20,.10); --nav:rgba(248,246,242,.82); }
+    html[data-theme="dark"] { color-scheme: dark; --bg:#0a0c10; --bg2:#11151b; --card:rgba(25,29,36,.76); --card2:rgba(34,39,48,.94); --text:#f7f8fb; --muted:#a5acb7; --line:rgba(255,255,255,.08); --accent:#5ea2ff; --accent-soft:rgba(94,162,255,.14); --shadow:0 22px 55px rgba(0,0,0,.32); --nav:rgba(17,20,26,.86); }
+
+    *{box-sizing:border-box} html,body{margin:0;min-height:100%} body{min-height:100dvh;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,sans-serif;background:radial-gradient(circle at -10% -10%,rgba(255,153,82,.20),transparent 30%),radial-gradient(circle at 110% 0%,rgba(56,129,255,.16),transparent 31%),linear-gradient(180deg,var(--bg),var(--bg2));background-attachment:fixed}
+    button,input{font:inherit}.app{width:min(100%,780px);margin:0 auto;padding:calc(env(safe-area-inset-top) + 14px) 16px calc(env(safe-area-inset-bottom) + 112px)}
+
+    .glass{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%)}
+    .hero{position:relative;overflow:hidden;border-radius:30px;padding:18px}.hero:before,.hero:after{content:"";position:absolute;border-radius:999px;filter:blur(8px);pointer-events:none}.hero:before{width:190px;height:190px;right:-52px;top:-84px;background:rgba(255,165,90,.22)}.hero:after{width:150px;height:150px;left:-50px;bottom:-88px;background:rgba(53,125,255,.15)}
+    .topbar,.brand,.top-actions,.status-row,.section-head,.row,.tile-head,.wide-row,.wide-left,.setting-row,.tabbar,.search-wrap{display:flex;align-items:center}.topbar,.section-head,.tile-head,.wide-row,.setting-row{justify-content:space-between}.brand{gap:11px}.brandmark{width:42px;height:42px;border-radius:15px;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,#151922,#465164);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 9px 20px rgba(0,0,0,.16)}.brandmark svg{width:24px;height:24px}.eyebrow{margin:0;font-size:11px;font-weight:850;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}.brand-sub{margin:2px 0 0;font-size:13px;color:var(--muted)}.top-actions{gap:8px}
+    .btn{appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.42);color:var(--text);min-height:40px;border-radius:14px;padding:0 12px;font-size:13px;font-weight:780;display:inline-flex;align-items:center;gap:7px;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.13)}html[data-theme="dark"] .btn{background:rgba(255,255,255,.05)}@media(prefers-color-scheme:dark){html[data-theme="auto"] .btn{background:rgba(255,255,255,.05)}}.btn.primary{background:var(--accent);color:#fff;border-color:transparent;box-shadow:0 8px 22px rgba(35,120,255,.22)}.btn:active,.tile:active,.quick:active,.tab:active,.room-card:active{transform:scale(.985)}
+    .hero-main{margin-top:18px}.greeting{margin:0;font-size:clamp(40px,10vw,58px);line-height:.95;letter-spacing:-.055em}.date-line{margin:8px 0 0;font-size:15px;color:var(--muted);font-weight:650}.sub{margin:11px 0 15px;max-width:48ch;color:var(--muted);font-size:14px;line-height:1.45}
+    .status-row{gap:8px;flex-wrap:wrap}.pill,.badge{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);background:rgba(255,255,255,.36);border-radius:999px}.pill{gap:7px;padding:8px 11px;font-size:11px;font-weight:780}.badge{height:22px;padding:0 8px;font-size:10px;font-weight:850;color:var(--muted)}html[data-theme="dark"] .pill,html[data-theme="dark"] .badge{background:rgba(255,255,255,.05)}@media(prefers-color-scheme:dark){html[data-theme="auto"] .pill,html[data-theme="auto"] .badge{background:rgba(255,255,255,.05)}}.live-dot{width:8px;height:8px;border-radius:999px;background:var(--green);box-shadow:0 0 0 4px rgba(47,181,106,.14)}
+
+    .search-wrap{margin-top:14px;gap:10px;padding:0 14px;height:48px;border-radius:16px;background:rgba(255,255,255,.48);border:1px solid var(--line)}html[data-theme="dark"] .search-wrap{background:rgba(255,255,255,.05)}@media(prefers-color-scheme:dark){html[data-theme="auto"] .search-wrap{background:rgba(255,255,255,.05)}}.search-wrap svg{width:19px;height:19px;color:var(--muted);flex:0 0 auto}.search{width:100%;border:0;outline:0;background:transparent;color:var(--text);font-size:14px}.search::placeholder{color:var(--muted)}.search-clear{display:none;border:0;background:transparent;color:var(--muted);font-size:18px;padding:4px;cursor:pointer}
+
+    .quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}.quick{text-decoration:none;color:inherit;min-height:92px;border-radius:19px;border:1px solid var(--line);background:rgba(255,255,255,.38);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;box-shadow:inset 0 1px 0 rgba(255,255,255,.14);transition:.14s}.quick span{font-size:11px;font-weight:820}html[data-theme="dark"] .quick{background:rgba(255,255,255,.04)}@media(prefers-color-scheme:dark){html[data-theme="auto"] .quick{background:rgba(255,255,255,.04)}}
+
+    .section{margin-top:24px}.section-head{gap:12px;margin:0 4px 11px}.section-title{margin:0;font-size:16px;font-weight:850;letter-spacing:-.02em}.section-meta{font-size:11px;font-weight:750;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.tile{position:relative;text-decoration:none;color:inherit;border-radius:22px;min-height:150px;padding:15px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;transition:.14s}.tile.wide{grid-column:1/-1;min-height:108px}.tile-title{margin:0;font-size:18px;font-weight:850;line-height:1.08;letter-spacing:-.025em}.tile-sub{margin:4px 0 0;color:var(--muted);font-size:12px;line-height:1.35}.wide-left{gap:13px;min-width:0}.trail{font-size:19px;font-weight:850;color:var(--muted)}
+    .fav-btn{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.50);color:var(--muted);display:grid;place-items:center;font-size:15px;z-index:3;cursor:pointer}.fav-btn.active{color:#ffb020;background:rgba(255,176,32,.13)}html[data-theme="dark"] .fav-btn{background:rgba(255,255,255,.07)}@media(prefers-color-scheme:dark){html[data-theme="auto"] .fav-btn{background:rgba(255,255,255,.07)}}
+
+    .app-icon{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;overflow:hidden;flex:0 0 auto;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 20px rgba(0,0,0,.12);border:1px solid rgba(255,255,255,.18)}.app-icon.small{width:54px;height:54px}.app-icon svg{width:100%;height:100%;display:block}.icon-lg{background:#fff}.icon-hc{background:#fff}.icon-daikin{background:linear-gradient(145deg,#0c77f0,#65ceff)}.icon-dreo{background:linear-gradient(145deg,#061d4c,#256eff)}.icon-bhyve{background:linear-gradient(145deg,#fff,#eef7e8)}.icon-meross{background:linear-gradient(145deg,#6359ff,#00c7ff)}.icon-eufy{background:linear-gradient(145deg,#3e7da9,#57c1dc)}.icon-cubo{background:linear-gradient(145deg,#32d2c8,#51e798)}.icon-dyson{background:linear-gradient(145deg,#20242a,#59616e)}.icon-tcl{background:linear-gradient(145deg,#e83a35,#ff7a55)}.icon-bose{background:linear-gradient(145deg,#050609,#30333b)}.icon-sun{background:linear-gradient(145deg,#7e31e0,#ff4b88)}
+
+    .page{display:none}.page.active{display:block}.search-results{display:none}.search-results.active{display:block}.search-empty{display:none;padding:24px;text-align:center;color:var(--muted);font-size:13px}.search-results .grid{margin-top:12px}
+    .room-grid,.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.room-card,.setting-card{border-radius:22px;padding:16px}.room-card.wide,.setting-card.wide{grid-column:1/-1}.room-card h3,.setting-card h3{margin:0 0 5px;font-size:18px;letter-spacing:-.02em}.room-card p,.setting-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.4}.room-icon{font-size:24px;margin-bottom:12px}.mini-links{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.mini-chip{text-decoration:none;color:inherit;padding:8px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.34);font-size:11px;font-weight:760}html[data-theme="dark"] .mini-chip{background:rgba(255,255,255,.04)}@media(prefers-color-scheme:dark){html[data-theme="auto"] .mini-chip{background:rgba(255,255,255,.04)}}
+    .settings-grid{margin-top:12px}.setting-row{gap:12px}.theme-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}.theme-btn{border:1px solid var(--line);background:rgba(255,255,255,.33);color:var(--muted);border-radius:14px;padding:10px 8px;font-size:11px;font-weight:800;cursor:pointer}.theme-btn.active{background:var(--accent-soft);color:var(--accent);border-color:rgba(35,120,255,.24)}html[data-theme="dark"] .theme-btn{background:rgba(255,255,255,.04)}@media(prefers-color-scheme:dark){html[data-theme="auto"] .theme-btn{background:rgba(255,255,255,.04)}}
+
+    .tabbar-wrap{position:fixed;left:0;right:0;bottom:0;padding:10px 14px calc(env(safe-area-inset-bottom) + 12px);z-index:100;pointer-events:none}.tabbar{width:min(100%,780px);margin:0 auto;gap:6px;padding:9px;border-radius:24px;background:var(--nav);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);pointer-events:auto}.tab{appearance:none;border:0;background:transparent;color:var(--muted);flex:1;min-height:58px;border-radius:17px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:10px;font-weight:820;cursor:pointer}.tab svg{width:19px;height:19px}.tab.active{color:var(--accent);background:var(--accent-soft)}
+    .footer{margin-top:20px;text-align:center;color:var(--muted);font-size:11px;line-height:1.45}.footer strong{color:var(--text)}
+    .toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 96px);transform:translateX(-50%) translateY(20px);z-index:300;padding:11px 14px;border-radius:14px;background:rgba(16,18,23,.90);color:#fff;font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:.22s;box-shadow:0 12px 36px rgba(0,0,0,.22)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    @media(max-width:480px){.quick-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.quick{min-height:86px}.btn .hide-small{display:none}.top-actions .btn{padding:0 10px}.grid,.room-grid,.settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.app{padding-left:14px;padding-right:14px}.hero{padding:16px}}
   </style>
 </head>
 <body>
-<main class="shell">
-  <p class="eyebrow">Demartini Home</p><h1>Home.</h1><p class="sub">One front door for the house. Tap a device to open its control app.</p>
-  <section class="section"><div class="section-title"><h2>Laundry & kitchen</h2><span>2 shortcuts</span></div><div class="grid">
-    <a class="card" href="shortcuts://run-shortcut?name=Laundry"><div class="icon">🧺</div><div><div class="name">Laundry</div><div class="meta">LG ThinQ · washer + dryer</div></div></a>
-    <a class="card" href="shortcuts://run-shortcut?name=Dishwasher"><div class="icon">🍽️</div><div><div class="name">Dishwasher</div><div class="meta">Bosch Home Connect</div></div></a>
-  </div></section>
-  <section class="section"><div class="section-title"><h2>Comfort & cleaning</h2><span>2 shortcuts</span></div><div class="grid">
-    <a class="card" href="shortcuts://run-shortcut?name=Air%20Con"><div class="icon">❄️</div><div><div class="name">Air Con</div><div class="meta">Daikin</div></div></a>
-    <a class="card" href="shortcuts://run-shortcut?name=Dyson"><div class="icon">🧹</div><div><div class="name">Dyson</div><div class="meta">MyDyson</div></div></a>
-  </div></section>
-  <section class="section"><div class="section-title"><h2>Entertainment</h2><span>2 shortcuts</span></div><div class="grid">
-    <a class="card wide" href="shortcuts://run-shortcut?name=TV"><div class="wide-row"><div class="wide-left"><div class="icon">📺</div><div><div class="name">TV</div><div class="meta">TCL / Google TV</div></div></div><div class="arrow">›</div></div></a>
-    <a class="card wide" href="shortcuts://run-shortcut?name=Bose"><div class="wide-row"><div class="wide-left"><div class="icon">🔊</div><div><div class="name">Bose</div><div class="meta">Bose soundbar / speaker</div></div></div><div class="arrow">›</div></div></a>
-  </div></section>
-  <div class="footer"><strong>v0.2</strong> · No passwords or appliance credentials are stored here. Each tile simply runs a Shortcut on your iPhone.</div>
+<main class="app">
+  <section class="hero glass">
+    <div class="topbar">
+      <div class="brand"><div class="brandmark"><svg viewBox="0 0 24 24" fill="none"><path d="M4 10.8 12 4l8 6.8v8.1a1.1 1.1 0 0 1-1.1 1.1H5.1A1.1 1.1 0 0 1 4 18.9v-8.1Z" stroke="currentColor" stroke-width="1.8"/><path d="M9.2 20v-5.8h5.6V20" stroke="currentColor" stroke-width="1.8"/></svg></div><div><p class="eyebrow">Demartini Home</p><p class="brand-sub">Premium home base</p></div></div>
+      <div class="top-actions"><button class="btn" id="refreshBtn" type="button">↻ <span class="hide-small">Refresh</span></button><button class="btn primary" id="updateBtn" type="button">⬇︎ <span class="hide-small">Update</span></button></div>
+    </div>
+    <div class="hero-main">
+      <h1 class="greeting" id="greeting">Good morning.</h1><p class="date-line" id="dateLine"></p>
+      <p class="sub">One polished home base for every smart device app now — and the same shell we can progressively turn into direct device control later.</p>
+      <div class="status-row"><div class="pill"><span class="live-dot"></span><span id="syncText">Ready</span></div><div class="pill">12 device apps</div><div class="pill" id="versionPill">v0.8</div></div>
+      <div class="search-wrap"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.6" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="searchInput" class="search" type="search" autocomplete="off" placeholder="Search apps, rooms or devices…" /><button class="search-clear" id="searchClear" aria-label="Clear search">×</button></div>
+      <div class="quick-grid">
+        <a class="quick" href="shortcuts://run-shortcut?name=Laundry" data-launch="Laundry"><div class="app-icon small icon-lg"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="24" fill="#a50034"/><path d="M24 19v27h17" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="39" cy="25" r="6" fill="none" stroke="#fff" stroke-width="3"/></svg></div><span>Laundry</span></a>
+        <a class="quick" href="shortcuts://run-shortcut?name=AC" data-launch="AC"><div class="app-icon small icon-daikin"><svg viewBox="0 0 64 64"><path d="M12 44 46 18h8L20 46h-8Z" fill="#fff" opacity=".96"/><path d="M15 47 48 22" stroke="#bfeaff" stroke-width="3" stroke-linecap="round"/></svg></div><span>AC</span></a>
+        <a class="quick" href="shortcuts://run-shortcut?name=Eufy" data-launch="Eufy"><div class="app-icon small icon-eufy"><svg viewBox="0 0 64 64"><path d="M32 10 49 17v13c0 11-7 19-17 24-10-5-17-13-17-24V17l17-7Z" fill="none" stroke="#fff" stroke-width="4"/><circle cx="32" cy="31" r="7" fill="#fff"/></svg></div><span>Security</span></a>
+        <a class="quick" href="shortcuts://run-shortcut?name=TV" data-launch="TV"><div class="app-icon small icon-tcl"><svg viewBox="0 0 64 64"><rect x="10" y="16" width="44" height="32" rx="5" fill="#fff"/><path d="M18 27h28M18 35h19" stroke="#e63b36" stroke-width="4" stroke-linecap="round"/></svg></div><span>TV</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="search-results" id="searchResults"><section class="section"><div class="section-head"><h2 class="section-title">Search results</h2><div class="section-meta" id="searchCount"></div></div><div class="grid" id="searchGrid"></div><div class="search-empty" id="searchEmpty">No matching apps or rooms.</div></section></section>
+
+  <section class="page active" id="page-home">
+    <section class="section"><div class="section-head"><h2 class="section-title">Appliances</h2><div class="section-meta">Laundry + kitchen</div></div><div class="grid" id="appliancesGrid"></div></section>
+    <section class="section"><div class="section-head"><h2 class="section-title">Climate & water</h2><div class="section-meta">Comfort + outdoors</div></div><div class="grid" id="climateGrid"></div></section>
+    <section class="section"><div class="section-head"><h2 class="section-title">Security & family</h2><div class="section-meta">Monitoring + care</div></div><div class="grid" id="securityGrid"></div></section>
+    <section class="section"><div class="section-head"><h2 class="section-title">Entertainment</h2><div class="section-meta">TV + audio</div></div><div class="grid" id="entertainmentGrid"></div></section>
+    <section class="section"><div class="section-head"><h2 class="section-title">Energy</h2><div class="section-meta">Solar</div></div><div class="grid" id="energyGrid"></div></section>
+  </section>
+
+  <section class="page" id="page-rooms"><section class="section"><div class="section-head"><h2 class="section-title">Rooms</h2><div class="section-meta">Grouped by space</div></div><div class="room-grid">
+    <div class="room-card glass"><div class="room-icon">🧺</div><h3>Laundry</h3><p>Washer and dryer controls.</p><div class="mini-links"><a class="mini-chip" href="shortcuts://run-shortcut?name=Laundry">LG ThinQ</a></div></div>
+    <div class="room-card glass"><div class="room-icon">🍽️</div><h3>Kitchen</h3><p>Dishwasher and kitchen devices.</p><div class="mini-links"><a class="mini-chip" href="shortcuts://run-shortcut?name=Dishwasher">Home Connect</a><a class="mini-chip" href="shortcuts://run-shortcut?name=Meross">Meross</a></div></div>
+    <div class="room-card glass"><div class="room-icon">🛋️</div><h3>Living Room</h3><p>Entertainment and comfort.</p><div class="mini-links"><a class="mini-chip" href="shortcuts://run-shortcut?name=TV">TCL</a><a class="mini-chip" href="shortcuts://run-shortcut?name=Bose">Bose</a><a class="mini-chip" href="shortcuts://run-shortcut?name=AC">Daikin</a></div></div>
+    <div class="room-card glass"><div class="room-icon">🍼</div><h3>Nursery</h3><p>Baby monitoring and humidity.</p><div class="mini-links"><a class="mini-chip" href="shortcuts://run-shortcut?name=Baby">Cubo</a><a class="mini-chip" href="shortcuts://run-shortcut?name=Humidifier">DREO</a></div></div>
+    <div class="room-card glass"><div class="room-icon">🌿</div><h3>Outdoors</h3><p>Irrigation, security and solar.</p><div class="mini-links"><a class="mini-chip" href="shortcuts://run-shortcut?name=Irrigation">B-hyve</a><a class="mini-chip" href="shortcuts://run-shortcut?name=Eufy">eufy</a><a class="mini-chip" href="shortcuts://run-shortcut?name=Solar">SunPower</a></div></div>
+    <div class="room-card glass"><div class="room-icon">⌂</div><h3>Whole House</h3><p>General smart-home controls.</p><div class="mini-links"><a class="mini-chip" href="shortcuts://run-shortcut?name=Meross">Meross</a><a class="mini-chip" href="shortcuts://run-shortcut?name=Dyson">MyDyson</a></div></div>
+  </div></section></section>
+
+  <section class="page" id="page-favourites"><section class="section"><div class="section-head"><h2 class="section-title">Favourites</h2><div class="section-meta" id="favMeta">Your quick list</div></div><div class="grid" id="favouritesGrid"></div><div class="search-empty" id="favEmpty">No favourites yet. Tap ★ on any app to add it here.</div></section></section>
+
+  <section class="page" id="page-settings"><section class="section"><div class="section-head"><h2 class="section-title">Settings</h2><div class="section-meta">App controls</div></div><div class="settings-grid">
+    <div class="setting-card wide glass"><h3>Appearance</h3><p>Choose how Demartini Home looks on this device.</p><div class="theme-options"><button class="theme-btn" data-theme-choice="auto">Auto</button><button class="theme-btn" data-theme-choice="light">Light</button><button class="theme-btn" data-theme-choice="dark">Dark</button></div></div>
+    <div class="setting-card wide glass"><div class="setting-row"><div><h3>Refresh</h3><p>Reload the current installed app.</p></div><button class="btn" id="settingsRefresh" type="button">↻ Refresh</button></div></div>
+    <div class="setting-card wide glass"><div class="setting-row"><div><h3>Download latest update</h3><p>Clears the local cache and pulls the newest version from GitHub Pages.</p></div><button class="btn primary" id="settingsUpdate" type="button">⬇︎ Update</button></div></div>
+    <div class="setting-card glass"><h3>Version</h3><p>Demartini Home <strong id="versionText">v0.8</strong></p></div>
+    <div class="setting-card glass"><h3>Status</h3><p id="updateStatus">Ready.</p></div>
+  </div></section></section>
+
+  <div class="footer"><strong>Demartini Home v0.8</strong><br>Runs as a private launcher on your iPhone; credentials stay inside the manufacturer apps.</div>
 </main>
-<script>if('serviceWorker'in navigator&&location.protocol.startsWith('http'))addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));</script>
-</body></html>
+
+<div class="tabbar-wrap"><nav class="tabbar" aria-label="Navigation">
+  <button class="tab active" data-page="home"><svg viewBox="0 0 24 24" fill="none"><path d="M4 10.8 12 4l8 6.8V20H4v-9.2Z" stroke="currentColor" stroke-width="1.8"/><path d="M9.3 20v-5.4h5.4V20" stroke="currentColor" stroke-width="1.8"/></svg><span>Home</span></button>
+  <button class="tab" data-page="rooms"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="4" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/><rect x="4" y="13" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="13" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/></svg><span>Rooms</span></button>
+  <button class="tab" data-page="favourites"><svg viewBox="0 0 24 24" fill="none"><path d="m12 4 2.4 5 5.6.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.6-.8L12 4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Favourites</span></button>
+  <button class="tab" data-page="settings"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M19 13.5v-3l-2-.7a7 7 0 0 0-.6-1.4l.9-1.9-2.1-2.1-1.9.9a7 7 0 0 0-1.4-.6L10.5 3h-3l-.7 2a7 7 0 0 0-1.4.6l-1.9-.9-2.1 2.1.9 1.9a7 7 0 0 0-.6 1.4L0 10.5v3l2 .7a7 7 0 0 0 .6 1.4l-.9 1.9 2.1 2.1 1.9-.9a7 7 0 0 0 1.4.6l.7 2h3l.7-2a7 7 0 0 0 1.4-.6l1.9.9 2.1-2.1-.9-1.9a7 7 0 0 0 .6-1.4l2-.7Z" stroke="currentColor" stroke-width="1.3" opacity=".7" transform="translate(2.3 0) scale(.81)"/></svg><span>Settings</span></button>
+</nav></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const VERSION='v0.8';
+const icons={
+  lg:`<div class="app-icon icon-lg"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="24" fill="#a50034"/><path d="M24 19v27h17" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="39" cy="25" r="6" fill="none" stroke="#fff" stroke-width="3"/></svg></div>`,
+  hc:`<div class="app-icon icon-hc"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22" fill="none" stroke="#d0002f" stroke-width="4"/><path d="M20 35h24M25 25h14" stroke="#d0002f" stroke-width="4" stroke-linecap="round"/></svg></div>`,
+  daikin:`<div class="app-icon icon-daikin"><svg viewBox="0 0 64 64"><path d="M12 44 46 18h8L20 46h-8Z" fill="#fff"/><path d="M16 47 49 22" stroke="#bfeaff" stroke-width="3" stroke-linecap="round"/></svg></div>`,
+  dreo:`<div class="app-icon icon-dreo"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="16" fill="none" stroke="#fff" stroke-width="4"/><path d="M32 19c6 8 7 11 0 13-7-2-6-5 0-13Zm13 13c-8 6-11 7-13 0 2-7 5-6 13 0ZM32 45c-6-8-7-11 0-13 7 2 6 5 0 13ZM19 32c8-6 11-7 13 0-2 7-5 6-13 0Z" fill="#fff" opacity=".9"/></svg></div>`,
+  bhyve:`<div class="app-icon icon-bhyve"><svg viewBox="0 0 64 64"><path d="M18 39c10-2 18-11 25-23 3 14-2 28-17 31" fill="none" stroke="#68b84e" stroke-width="5" stroke-linecap="round"/><path d="M22 44c6-8 12-13 21-18" stroke="#68b84e" stroke-width="3" stroke-linecap="round"/></svg></div>`,
+  meross:`<div class="app-icon icon-meross"><svg viewBox="0 0 64 64"><path d="M16 44V20l16 14 16-14v24" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`,
+  eufy:`<div class="app-icon icon-eufy"><svg viewBox="0 0 64 64"><path d="M32 10 49 17v13c0 11-7 19-17 24-10-5-17-13-17-24V17l17-7Z" fill="none" stroke="#fff" stroke-width="4"/><circle cx="32" cy="31" r="7" fill="#fff"/></svg></div>`,
+  cubo:`<div class="app-icon icon-cubo"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="20" fill="none" stroke="#fff" stroke-width="4"/><circle cx="25" cy="29" r="3" fill="#fff"/><circle cx="39" cy="29" r="3" fill="#fff"/><path d="M25 39c5 4 9 4 14 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div>`,
+  dyson:`<div class="app-icon icon-dyson"><svg viewBox="0 0 64 64"><path d="M15 38c9-11 25-14 34-6-5 8-15 13-29 10" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="23" cy="43" r="5" fill="none" stroke="#fff" stroke-width="3"/></svg></div>`,
+  tcl:`<div class="app-icon icon-tcl"><svg viewBox="0 0 64 64"><rect x="10" y="16" width="44" height="32" rx="5" fill="#fff"/><path d="M18 27h28M18 35h19" stroke="#e63b36" stroke-width="4" stroke-linecap="round"/></svg></div>`,
+  bose:`<div class="app-icon icon-bose"><svg viewBox="0 0 64 64"><path d="M18 19h19c8 0 11 12 2 15 11 2 9 15-1 15H18V19Z" fill="none" stroke="#fff" stroke-width="4"/><path d="M22 29h15M22 40h16" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div>`,
+  sun:`<div class="app-icon icon-sun"><svg viewBox="0 0 64 64"><circle cx="32" cy="28" r="10" fill="#ffe152"/><g stroke="#ffe152" stroke-width="4" stroke-linecap="round"><path d="M32 8v6M32 42v6M12 28h6M46 28h6M18 14l4 4M42 38l4 4M46 14l-4 4M22 38l-4 4"/></g><path d="M17 50h30" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg></div>`
+};
+const apps=[
+ {id:'lg',name:'LG ThinQ',label:'Laundry',detail:'Washer + dryer',shortcut:'Laundry',section:'appliances',room:'Laundry',icon:'lg',keywords:'lg thinq washer dryer laundry appliance'},
+ {id:'bosch',name:'Home Connect',label:'Dishwasher',detail:'Bosch dishwasher',shortcut:'Dishwasher',section:'appliances',room:'Kitchen',icon:'hc',keywords:'bosch home connect dishwasher kitchen appliance'},
+ {id:'daikin',name:'Daikin',label:'AC',detail:'Air conditioning',shortcut:'AC',section:'climate',room:'Living Room',icon:'daikin',keywords:'daikin ac air conditioner climate living room'},
+ {id:'dreo',name:'DREO',label:'Humidifier',detail:'Air comfort',shortcut:'Humidifier',section:'climate',room:'Nursery',icon:'dreo',keywords:'dreo humidifier climate nursery air comfort'},
+ {id:'bhyve',name:'B-hyve',label:'Irrigation',detail:'Garden watering',shortcut:'Irrigation',section:'climate',room:'Outdoors',icon:'bhyve',keywords:'b hyve irrigation garden watering outdoors orbit'},
+ {id:'meross',name:'Meross',label:'Meross',detail:'Smart devices',shortcut:'Meross',section:'climate',room:'Whole House',icon:'meross',keywords:'meross smart home plugs switches'},
+ {id:'eufy',name:'eufy',label:'Security',detail:'Cameras + alerts',shortcut:'Eufy',section:'security',room:'Outdoors',icon:'eufy',keywords:'eufy security camera cameras alerts'},
+ {id:'cubo',name:'Cubo',label:'Baby',detail:'Nursery monitor',shortcut:'Baby',section:'security',room:'Nursery',icon:'cubo',keywords:'cubo baby nursery monitor camera'},
+ {id:'dyson',name:'MyDyson',label:'Vacuum',detail:'Vacuum tools + status',shortcut:'Dyson',section:'security',room:'Whole House',icon:'dyson',keywords:'dyson vacuum cleaner whole house'},
+ {id:'tcl',name:'TCL Home',label:'TV',detail:'Television controls',shortcut:'TV',section:'entertainment',room:'Living Room',icon:'tcl',keywords:'tcl television tv living room entertainment'},
+ {id:'bose',name:'Bose',label:'Speaker',detail:'Speaker + sound',shortcut:'Bose',section:'entertainment',room:'Living Room',icon:'bose',keywords:'bose speaker soundbar audio entertainment'},
+ {id:'sunpower',name:'SunPower',label:'Solar',detail:'Solar + energy',shortcut:'Solar',section:'energy',room:'Outdoors',icon:'sun',keywords:'sunpower solar energy panels outdoors'}
+];
+const defaultFavourites=['daikin','tcl','eufy','lg'];
+let favourites=new Set(JSON.parse(localStorage.getItem('demartini-favourites')||JSON.stringify(defaultFavourites)));
+
+function card(app,wide=false){
+ const fav=favourites.has(app.id); const wideClass=wide?' wide':'';
+ return `<a class="tile glass${wideClass}" href="shortcuts://run-shortcut?name=${encodeURIComponent(app.shortcut)}" data-app-id="${app.id}" data-search="${(app.name+' '+app.label+' '+app.detail+' '+app.room+' '+app.keywords).toLowerCase()}"><button class="fav-btn${fav?' active':''}" data-fav="${app.id}" type="button" aria-label="${fav?'Remove from':'Add to'} favourites">★</button>${wide?`<div class="wide-row"><div class="wide-left">${icons[app.icon]}<div><p class="tile-title">${app.name}</p><p class="tile-sub">(${app.label})<br>${app.detail}</p></div></div><div class="trail">›</div></div>`:`<div class="tile-head">${icons[app.icon]}<div class="badge">${app.label}</div></div><div><p class="tile-title">${app.name}</p><p class="tile-sub">(${app.label})<br>${app.detail}</p></div>`}</a>`;
+}
+function sectionRender(section,id){const list=apps.filter(a=>a.section===section);document.getElementById(id).innerHTML=list.map((a,i)=>card(a,section==='entertainment'||section==='energy'||(section==='security'&&i===2))).join('')}
+function renderHome(){sectionRender('appliances','appliancesGrid');sectionRender('climate','climateGrid');sectionRender('security','securityGrid');sectionRender('entertainment','entertainmentGrid');sectionRender('energy','energyGrid');wireFavouriteButtons()}
+function renderFavourites(){const list=apps.filter(a=>favourites.has(a.id));document.getElementById('favouritesGrid').innerHTML=list.map(a=>card(a,false)).join('');document.getElementById('favEmpty').style.display=list.length?'none':'block';document.getElementById('favMeta').textContent=`${list.length} saved`;wireFavouriteButtons()}
+function wireFavouriteButtons(){document.querySelectorAll('[data-fav]').forEach(btn=>{btn.onclick=e=>{e.preventDefault();e.stopPropagation();const id=btn.dataset.fav;if(favourites.has(id))favourites.delete(id);else favourites.add(id);localStorage.setItem('demartini-favourites',JSON.stringify([...favourites]));renderHome();renderFavourites();toast(favourites.has(id)?'Added to favourites':'Removed from favourites')}})}
+function searchApps(q){const term=q.trim().toLowerCase();const results=document.getElementById('searchResults');const pages=document.querySelectorAll('.page');if(!term){results.classList.remove('active');pages.forEach(p=>p.style.display='');document.getElementById('searchClear').style.display='none';return}document.getElementById('searchClear').style.display='block';pages.forEach(p=>p.style.display='none');results.classList.add('active');const matches=apps.filter(a=>(a.name+' '+a.label+' '+a.detail+' '+a.room+' '+a.keywords).toLowerCase().includes(term));document.getElementById('searchGrid').innerHTML=matches.map(a=>card(a,false)).join('');document.getElementById('searchCount').textContent=`${matches.length} result${matches.length===1?'':'s'}`;document.getElementById('searchEmpty').style.display=matches.length?'none':'block';wireFavouriteButtons()}
+function switchPage(name){document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.style.display=''});document.getElementById(`page-${name}`).classList.add('active');document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.page===name));localStorage.setItem('demartini-page',name);document.getElementById('searchInput').value='';searchApps('');window.scrollTo({top:0,behavior:'smooth'})}
+function setGreeting(){const now=new Date();const h=now.getHours();document.getElementById('greeting').textContent=h<12?'Good morning.':h<18?'Good afternoon.':'Good evening.';document.getElementById('dateLine').textContent=new Intl.DateTimeFormat(undefined,{weekday:'long',day:'numeric',month:'long'}).format(now)}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.classList.remove('show'),1700)}
+function applyTheme(theme){document.documentElement.dataset.theme=theme;localStorage.setItem('demartini-theme',theme);document.querySelectorAll('[data-theme-choice]').forEach(b=>b.classList.toggle('active',b.dataset.themeChoice===theme))}
+function setStatus(msg){document.getElementById('syncText').textContent=msg;document.getElementById('updateStatus').textContent=msg}
+async function refreshApp(){setStatus('Refreshing…');setTimeout(()=>location.reload(),250)}
+async function updateApp(){try{setStatus('Checking for updates…');toast('Downloading latest version…');if('serviceWorker'in navigator){const regs=await navigator.serviceWorker.getRegistrations();for(const r of regs){try{await r.update()}catch(e){}}}if('caches'in window){const keys=await caches.keys();await Promise.all(keys.map(k=>caches.delete(k)))}const bust=`?update=${Date.now()}`;await Promise.allSettled([fetch(`./index.html${bust}`,{cache:'no-store'}),fetch(`./service-worker.js${bust}`,{cache:'no-store'}),fetch(`./manifest.webmanifest${bust}`,{cache:'no-store'})]);setStatus('Latest version downloaded. Reloading…');setTimeout(()=>location.href=`./index.html${bust}`,500)}catch(e){setStatus('Update failed. Try again.');toast('Update failed')}}
+
+renderHome();renderFavourites();setGreeting();applyTheme(localStorage.getItem('demartini-theme')||'auto');document.getElementById('versionText').textContent=VERSION;document.getElementById('versionPill').textContent=VERSION;document.getElementById('searchInput').addEventListener('input',e=>searchApps(e.target.value));document.getElementById('searchClear').onclick=()=>{document.getElementById('searchInput').value='';searchApps('');document.getElementById('searchInput').focus()};document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>switchPage(t.dataset.page));document.querySelectorAll('[data-theme-choice]').forEach(b=>b.onclick=()=>applyTheme(b.dataset.themeChoice));document.getElementById('refreshBtn').onclick=refreshApp;document.getElementById('settingsRefresh').onclick=refreshApp;document.getElementById('updateBtn').onclick=updateApp;document.getElementById('settingsUpdate').onclick=updateApp;const saved=localStorage.getItem('demartini-page');if(saved&&document.getElementById(`page-${saved}`))switchPage(saved);
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./service-worker.js');setStatus('Ready');if(reg.waiting){setStatus('Update ready — tap Update')}}catch(e){setStatus('Ready')}});
+</script>
+</body>
+</html>
