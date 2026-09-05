@@ -1,11 +1,6 @@
-name: Deploy Demartini Home
+name: Deploy Demartini Home (manual fallback)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'demartini-home/**'
-      - '.github/workflows/demartini-home-pages.yml'
   workflow_dispatch:
 
 permissions:
